@@ -14,6 +14,17 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 
+add_description = '''
+do !add with a json string like this
+    {
+        'division': "ERIN", # string of division
+        'sessions': "20259", # string of session ID
+        'course_code': "CSC207H5", # string of course code
+        'sections': ['PRA0107'] # a list sections
+    }
+full list can be found in pinned messages.
+'''
+
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
@@ -25,7 +36,7 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send("Pong!")
 
-@bot.command()
+@bot.command(description=add_description)
 async def add(ctx, *, course_json: str):
     user_id = str(ctx.author.id)
     course_dict = ast.literal_eval(course_json)
@@ -63,7 +74,7 @@ async def myentries(ctx):
 
     message_lines = ["Your Entries:"]
     for i, entry in enumerate(entries, 1):
-        message_lines.append(f"{i}. {entry['course']}")
+        message_lines.append(f"{i}. {entry['course']}: {entry['course_data']['sections']}")
 
     await ctx.send("\n".join(message_lines))
 

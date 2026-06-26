@@ -41,16 +41,16 @@ def group_by_course_and_session(data):
 
         if None in key:
             continue
-        
+
         grouped[key].append(course)
     return grouped
 
 def get_user_entries(user_id: str):
     response = supabase.table("courses").select("*").eq("user_id", user_id).execute()
-    
+
     if response.data is None:
         raise Exception("Failed to fetch entries from Supabase.")
-    
+
     return response.data or []
 
 def add_user_entry(user_id: str, course_dict: dict):
@@ -63,7 +63,7 @@ def add_user_entry(user_id: str, course_dict: dict):
 
     if not response.data:
         raise Exception("Failed to add entry.")
-    
+
     return response.data
 
 def delete_user_entry(entry_id: int):
@@ -76,7 +76,7 @@ def delete_user_entry(entry_id: int):
 
 def get_all_courses():
     response = supabase.table("courses").select("*").execute()
-    
+
     return response.data or []
 
 async def get_course_data(data: list[dict]):
@@ -126,6 +126,9 @@ async def get_course_data(data: list[dict]):
                 if current_enrollement < max_enrollement:
                     message = f"There are {max_enrollement - current_enrollement} spots available in section {section} in course {course['course_code']}."
                     open_courses.append(message + f" <@{course['user_id']}>")
+                else:
+                    message = f"There are no empty spots in section {section} in course {course['course_code']}."
+                    print(message)
 
     return open_courses
 

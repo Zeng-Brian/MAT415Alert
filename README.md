@@ -1,5 +1,3 @@
-
-
 # TTB Enrollment Checker
 
 This project provides two ways to get notified about open seats in University of Toronto Timetable Builder (TTB) course sections:
