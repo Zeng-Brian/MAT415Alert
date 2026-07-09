@@ -64,11 +64,11 @@ async def get_course_data():
 
     if current_enrollement < max_enrollement:
         message = f"There are {max_enrollement - current_enrollement} spot(s) available in section MAT415."
+        return message
     else:
         message = f"There are no empty spots in section in MAT415."
         print(message)
-
-    return message
+        return message
 
 
 async def fetch_course_data(payload):
