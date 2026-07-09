@@ -39,13 +39,12 @@ async def ping(ctx):
 
 @tasks.loop(minutes=5)
 async def check_courses():
-    message = get_course_data()
-    await ctx.send(message)
+    channel = bot.get_channel(int(CHANNEL_ID))
+    message = await get_course_data()
+    await channel.send(message)
 
 @bot.command()
 async def run_api(ctx):
-    message = get_course_data()
-    print(message)
-    await ctx.send(message)
+    await check_courses()
     
 bot.run(TOKEN)
