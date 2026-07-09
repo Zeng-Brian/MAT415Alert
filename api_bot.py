@@ -63,11 +63,9 @@ async def get_course_data():
     max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
     if current_enrollement < max_enrollement:
-        message = f"There are {max_enrollement - current_enrollement} spot(s) available in MAT415."
+        message = f"There are {max_enrollement - current_enrollement} spot(s) available in MAT415. <@&1524589339793686668>"
     else:
-        message = f"There are no spots in MAT415."
-
-    message = message + f" <@&1524589339793686668>"
+        message = ""
     
     return message
 
