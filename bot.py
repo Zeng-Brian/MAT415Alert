@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 
-from api_bot import get_course_data, add_user_entry, delete_user_entry, get_user_entries, get_all_courses
+from api_bot import get_course_data
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
