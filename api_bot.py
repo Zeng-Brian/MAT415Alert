@@ -67,7 +67,9 @@ async def get_course_data():
     else:
         message = f"There are no empty spots in section in MAT415."
         print(message)
-        
+
+    message = message + f" <@1524589339793686668>"
+    
     return message
 
 
