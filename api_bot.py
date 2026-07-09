@@ -23,9 +23,7 @@ CURR_ENROL_ETAG = "</currentEnrolment>"
 MAX_ENROL_STAG = "<maxEnrolment>"
 MAX_ENROL_ETAG = "</maxEnrolment>"
 
-async def get_course_data(data: list[dict]):
-    grouped_data = group_by_course_and_session(data)
-    open_courses = []
+async def get_course_data():
 
     payload = {
             "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
@@ -69,7 +67,6 @@ async def get_course_data(data: list[dict]):
 
     if current_enrollement < max_enrollement:
         message = f"There are {max_enrollement - current_enrollement} spot(s) available in section MAT415."
-        open_courses.append(message + f" <@{course['user_id']}>")
     else:
         message = f"There are no empty spots in section {section} in course {course['course_code']}."
         print(message)
