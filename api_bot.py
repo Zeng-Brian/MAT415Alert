@@ -26,7 +26,7 @@ MAX_ENROL_ETAG = "</maxEnrolment>"
 async def get_course_data():
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": "MAT415", "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
             "sessions": ["20269"],
@@ -59,9 +59,6 @@ async def get_course_data():
     max_enrol_spos = text.find(MAX_ENROL_STAG, curr_enrol_epos)
     max_enrol_epos = text.find(MAX_ENROL_ETAG, max_enrol_spos)
 
-    print(text)
-    print(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
-
     current_enrollement = int(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
     max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
@@ -69,6 +66,8 @@ async def get_course_data():
         message = f"There are {max_enrollement - current_enrollement} spot(s) available in MAT415."
     else:
         message = f"There are no spots in MAT415."
+
+    message = message + f" <@1524589339793686668>"
     
     return message
 
