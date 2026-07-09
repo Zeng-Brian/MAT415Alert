@@ -26,7 +26,7 @@ MAX_ENROL_ETAG = "</maxEnrolment>"
 async def get_course_data():
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": "CSC373H1", "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
             "sessions": ["20269"],
@@ -44,7 +44,6 @@ async def get_course_data():
             "pageSize": PAGE_SIZE,
             "direction": "asc"
         }
-    print("Test1")
     text = await fetch_course_data(payload)
 
 
@@ -53,7 +52,6 @@ async def get_course_data():
 
     text = text[start_pos:end_pos]
 
-    print("Test2")
     section_start_pos = text.find("LEC0101")
     curr_enrol_spos = text.find(CURR_ENROL_STAG, section_start_pos)
     curr_enrol_epos = text.find(CURR_ENROL_ETAG, curr_enrol_spos)
@@ -61,7 +59,6 @@ async def get_course_data():
     max_enrol_spos = text.find(MAX_ENROL_STAG, curr_enrol_epos)
     max_enrol_epos = text.find(MAX_ENROL_ETAG, max_enrol_spos)
 
-    print("Test3")
     current_enrollement = int(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
     max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
@@ -70,7 +67,8 @@ async def get_course_data():
     else:
         message = f"There are no empty spots in section in MAT415."
         print(message)
-        print("Test4")
+
+    return message
 
 
 async def fetch_course_data(payload):
