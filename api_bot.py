@@ -59,6 +59,9 @@ async def get_course_data():
     max_enrol_spos = text.find(MAX_ENROL_STAG, curr_enrol_epos)
     max_enrol_epos = text.find(MAX_ENROL_ETAG, max_enrol_spos)
 
+    print(text)
+    print(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
+
     current_enrollement = int(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
     max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
