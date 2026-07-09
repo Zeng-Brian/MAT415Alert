@@ -23,68 +23,11 @@ CURR_ENROL_ETAG = "</currentEnrolment>"
 MAX_ENROL_STAG = "<maxEnrolment>"
 MAX_ENROL_ETAG = "</maxEnrolment>"
 
-load_dotenv()
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
-
-supabase = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-def group_by_course_and_session(data):
-    grouped = defaultdict(list)
-    for item in data:
-        course = item.get('course_data')
-
-        if not course:
-            continue
-
-        key = (course.get('course_code'), course.get('sessions'), course.get('division'))
-
-        if None in key:
-            continue
-
-        grouped[key].append(course)
-    return grouped
-
-def get_user_entries(user_id: str):
-    response = supabase.table("courses").select("*").eq("user_id", user_id).execute()
-
-    if response.data is None:
-        raise Exception("Failed to fetch entries from Supabase.")
-
-    return response.data or []
-
-def add_user_entry(user_id: str, course_dict: dict):
-    record = {
-        "user_id": user_id,
-        "course_data": course_dict,
-        "course": course_dict.get("course_code") or ""
-    }
-    response = supabase.table("courses").insert(record).execute()
-
-    if not response.data:
-        raise Exception("Failed to add entry.")
-
-    return response.data
-
-def delete_user_entry(entry_id: int):
-    response = supabase.table("courses").delete().eq("id", entry_id).execute()
-
-    if response.data is None:
-        raise Exception("Failed to delete entry")
-
-    return response.data
-
-def get_all_courses():
-    response = supabase.table("courses").select("*").execute()
-
-    return response.data or []
-
 async def get_course_data(data: list[dict]):
     grouped_data = group_by_course_and_session(data)
     open_courses = []
 
-    for (course_code, session, division), courses in grouped_data.items():
-        payload = {
+    payload = {
             "courseCodeAndTitleProps": {"courseCode": course_code, "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
@@ -103,15 +46,15 @@ async def get_course_data(data: list[dict]):
             "pageSize": PAGE_SIZE,
             "direction": "asc"
         }
-        text = await fetch_course_data(payload)
+    text = await fetch_course_data(payload)
 
 
-        start_pos = text.find(START_MARKER)
-        end_pos = text.find(END_MARKER, start_pos)
+    start_pos = text.find(START_MARKER)
+    end_pos = text.find(END_MARKER, start_pos)
 
-        text = text[start_pos:end_pos]
+    text = text[start_pos:end_pos]
 
-        for course in courses:
+    for course in courses:
             for section in course['sections']:
                 section_start_pos = text.find(section)
                 curr_enrol_spos = text.find(CURR_ENROL_STAG, section_start_pos)
@@ -129,8 +72,6 @@ async def get_course_data(data: list[dict]):
                 else:
                     message = f"There are no empty spots in section {section} in course {course['course_code']}."
                     print(message)
-
-    return open_courses
 
 
 async def fetch_course_data(payload):
