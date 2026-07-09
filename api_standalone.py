@@ -90,8 +90,8 @@ for course in courses:
 
         if current_enrollement < max_enrollement:
             message = f"There are {max_enrollement - current_enrollement} spots available in section {section} in course {course['course_code']}."
-            send_discord_message(message, course['user_id'])
+            send_discord_message(message, 1524589339793686668)
         # Not really useful but just in case you want a message of its full
         # else:
-        #     message = f"Section {section} of course {course['course_code']} is full."
-        #     send_discord_message(message, course['user_id'])
+             message = f"Section {section} of course {course['course_code']} is full."
+             send_discord_message(message, 1524589339793686668)
