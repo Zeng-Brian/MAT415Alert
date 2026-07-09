@@ -39,21 +39,11 @@ async def ping(ctx):
 
 @tasks.loop(minutes=5)
 async def check_courses():
-    await check_courses_logic()
-
-async def check_courses_logic():
-    all_courses = get_all_courses()
-    if not all_courses:
-        return
-    open_courses = await get_course_data(all_courses)
-    if open_courses:
-        channel = bot.get_channel(int(CHANNEL_ID))
-        await channel.send("\n".join(open_courses))
+    await get_course_data()
 
 @bot.command()
 async def run_api(ctx):
-    await ctx.send("Test!")
-    await check_courses_logic()
+    await get_course_data()
     await ctx.send("API check started.")
 
 bot.run(TOKEN)
