@@ -1,5 +1,6 @@
 import os
 import ast
+import aiohttp
 import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -35,48 +36,6 @@ async def on_ready():
 @bot.command()
 async def ping(ctx):
     await ctx.send("Pong!")
-
-@bot.command(description=add_description)
-async def add(ctx, *, course_json: str):
-    user_id = str(ctx.author.id)
-    course_dict = ast.literal_eval(course_json)
-    course_dict['user_id'] = user_id
-
-    add_user_entry(user_id, course_dict)
-    
-    await ctx.send(f"Added course: {course_dict.get('course_code', 'unknown')}")
-
-@bot.command()
-async def delete(ctx, *, number: int):
-    user_id = str(ctx.author.id)
-    entries = get_user_entries(user_id)
-
-    if not entries:
-        await ctx.send("You have no entries.")
-        return
-
-    if number < 1 or number > len(entries):
-        await ctx.send("Invalid entry number.")
-        return
-
-    entry_to_delete = entries[number - 1]
-    delete_user_entry(entry_to_delete['id'])
-    await ctx.send(f"Deleted course: {entry_to_delete['course']}")
-
-@bot.command()
-async def myentries(ctx):
-    user_id = str(ctx.author.id)
-    entries = get_user_entries(user_id)
-
-    if not entries:
-        await ctx.send("You have no entries.")
-        return
-
-    message_lines = ["Your Entries:"]
-    for i, entry in enumerate(entries, 1):
-        message_lines.append(f"{i}. {entry['course']}: {entry['course_data']['sections']}")
-
-    await ctx.send("\n".join(message_lines))
 
 @tasks.loop(minutes=5)
 async def check_courses():
