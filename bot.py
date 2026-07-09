@@ -45,6 +45,5 @@ async def check_courses():
 @bot.command()
 async def run_api(ctx):
     await ctx.send(get_course_data())
-    await ctx.send("API check started.")
 
 bot.run(TOKEN)
