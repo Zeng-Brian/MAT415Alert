@@ -67,7 +67,7 @@ async def get_course_data():
     else:
         message = f"There are no spots in MAT415."
 
-    message = message + f" <@1524589339793686668>"
+    message = message + f" <@&1524589339793686668>"
     
     return message
 
