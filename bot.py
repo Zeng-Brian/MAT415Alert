@@ -51,8 +51,8 @@ async def check_courses_logic():
         await channel.send("\n".join(open_courses))
 
 @bot.command()
-@commands.has_permissions(administrator=True)
 async def run_api(ctx):
+    await ctx.send("Test!")
     await check_courses_logic()
     await ctx.send("API check started.")
 
