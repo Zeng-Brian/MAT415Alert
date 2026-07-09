@@ -28,17 +28,17 @@ async def get_course_data(data: list[dict]):
     open_courses = []
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": MAT415H1, "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
-            "sessions": [20269],
+            "sessions": ["20269"],
             "requirementProps": [],
             "instructor": "",
             "courseLevels": [],
             "deliveryModes": [],
             "dayPreferences": [],
             "timePreferences": [],
-            "divisions": [ARTSC],
+            "divisions": ["ARTSC"],
             "creditWeights": [],
             "availableSpace": False,
             "waitListable": False,
@@ -46,6 +46,7 @@ async def get_course_data(data: list[dict]):
             "pageSize": PAGE_SIZE,
             "direction": "asc"
         }
+    await ctx.send("Test1!")
     text = await fetch_course_data(payload)
 
 
@@ -54,24 +55,25 @@ async def get_course_data(data: list[dict]):
 
     text = text[start_pos:end_pos]
 
-    for course in courses:
-            for section in course['sections']:
-                section_start_pos = text.find(section)
-                curr_enrol_spos = text.find(CURR_ENROL_STAG, section_start_pos)
-                curr_enrol_epos = text.find(CURR_ENROL_ETAG, curr_enrol_spos)
+    await ctx.send("Test2!")
+    section_start_pos = text.find("LEC0101")
+    curr_enrol_spos = text.find(CURR_ENROL_STAG, section_start_pos)
+    curr_enrol_epos = text.find(CURR_ENROL_ETAG, curr_enrol_spos)
 
-                max_enrol_spos = text.find(MAX_ENROL_STAG, curr_enrol_epos)
-                max_enrol_epos = text.find(MAX_ENROL_ETAG, max_enrol_spos)
+    max_enrol_spos = text.find(MAX_ENROL_STAG, curr_enrol_epos)
+    max_enrol_epos = text.find(MAX_ENROL_ETAG, max_enrol_spos)
 
-                current_enrollement = int(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
-                max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
+    await ctx.send("Test3!")
+    current_enrollement = int(text[curr_enrol_spos + len(CURR_ENROL_STAG): curr_enrol_epos])
+    max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
-                if current_enrollement < max_enrollement:
-                    message = f"There are {max_enrollement - current_enrollement} spots available in section {section} in course {course['course_code']}."
-                    open_courses.append(message + f" <@{course['user_id']}>")
-                else:
-                    message = f"There are no empty spots in section {section} in course {course['course_code']}."
-                    print(message)
+    if current_enrollement < max_enrollement:
+        message = f"There are {max_enrollement - current_enrollement} spot(s) available in section MAT415."
+        open_courses.append(message + f" <@{course['user_id']}>")
+    else:
+        message = f"There are no empty spots in section {section} in course {course['course_code']}."
+        print(message)
+        await ctx.send("Test4!")
 
 
 async def fetch_course_data(payload):
