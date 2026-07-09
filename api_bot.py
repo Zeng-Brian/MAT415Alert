@@ -28,7 +28,7 @@ async def get_course_data(data: list[dict]):
     open_courses = []
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": course_code, "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": MAT415H1, "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
             "sessions": [session],
