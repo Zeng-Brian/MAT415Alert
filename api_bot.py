@@ -66,6 +66,7 @@ async def get_course_data():
         message = f"There are {max_enrollement - current_enrollement} spot(s) available in MAT415. <@&1524589339793686668>"
     else:
         message = ""
+        print("No seats :(")
     
     return message
 
