@@ -41,7 +41,8 @@ async def ping(ctx):
 async def check_courses():
     channel = bot.get_channel(int(CHANNEL_ID))
     message = await get_course_data()
-    await channel.send(message)
+    if message != "":
+        await channel.send(message)
 
 @bot.command()
 async def run_api(ctx):
