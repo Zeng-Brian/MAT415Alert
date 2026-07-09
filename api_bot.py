@@ -26,7 +26,7 @@ MAX_ENROL_ETAG = "</maxEnrolment>"
 async def get_course_data():
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": "CSC373H1", "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
             "sessions": ["20269"],
