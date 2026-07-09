@@ -4,6 +4,12 @@ from collections import defaultdict
 from dotenv import load_dotenv
 from supabase import create_client
 
+ROLEID = os.getenv("ROLEID")
+DIVISION = os.getenv("DIVISION")
+SESSION = os.getenv("SESSION")
+COURSE_CODE = os.getenv("COURSE_CODE")
+
+
 url = "https://api.easi.utoronto.ca/ttb/getPageableCourses"
 
 headers = {
@@ -26,17 +32,17 @@ MAX_ENROL_ETAG = "</maxEnrolment>"
 async def get_course_data():
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": "MAT415H1", "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": COURSE_CODE, "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
-            "sessions": ["20269"],
+            "sessions": [SESSION],
             "requirementProps": [],
             "instructor": "",
             "courseLevels": [],
             "deliveryModes": [],
             "dayPreferences": [],
             "timePreferences": [],
-            "divisions": ["ARTSC"],
+            "divisions": [DIVISION],
             "creditWeights": [],
             "availableSpace": False,
             "waitListable": False,
@@ -63,7 +69,7 @@ async def get_course_data():
     max_enrollement = int(text[max_enrol_spos + len(MAX_ENROL_STAG): max_enrol_epos])
 
     if current_enrollement < max_enrollement:
-        message = f"There are {max_enrollement - current_enrollement} spot(s) available in MAT415. <@&1524589339793686668>"
+        message = f"There are {max_enrollement - current_enrollement} spot(s) available in {COURSE_CODE}. <@&{ROLEID}>"
     else:
         message = ""
         print("No seats :(")
