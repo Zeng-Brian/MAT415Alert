@@ -78,7 +78,7 @@ async def myentries(ctx):
 
     await ctx.send("\n".join(message_lines))
 
-@tasks.loop(hours=8)
+@tasks.loop(minutes=5)
 async def check_courses():
     await check_courses_logic()
 
