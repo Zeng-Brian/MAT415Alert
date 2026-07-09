@@ -45,6 +45,7 @@ async def check_courses():
 @bot.command()
 async def run_api(ctx):
     message = get_course_data()
+    print(message)
     await ctx.send(message)
     
 bot.run(TOKEN)
