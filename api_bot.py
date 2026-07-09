@@ -26,7 +26,7 @@ MAX_ENROL_ETAG = "</maxEnrolment>"
 async def get_course_data():
 
     payload = {
-            "courseCodeAndTitleProps": {"courseCode": "CSC373H1", "courseTitle": "", "courseSectionCode": ""},
+            "courseCodeAndTitleProps": {"courseCode": "MAT415", "courseTitle": "", "courseSectionCode": ""},
             "departmentProps": [],
             "campuses": [],
             "sessions": ["20269"],
@@ -64,11 +64,11 @@ async def get_course_data():
 
     if current_enrollement < max_enrollement:
         message = f"There are {max_enrollement - current_enrollement} spot(s) available in section MAT415."
-        return message
     else:
         message = f"There are no empty spots in section in MAT415."
         print(message)
-        return message
+        
+    return message
 
 
 async def fetch_course_data(payload):
