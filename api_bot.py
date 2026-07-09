@@ -4,6 +4,8 @@ from collections import defaultdict
 from dotenv import load_dotenv
 from supabase import create_client
 
+
+load_dotenv()
 ROLEID = os.getenv("ROLEID")
 DIVISION = os.getenv("DIVISION")
 SESSION = os.getenv("SESSION")
